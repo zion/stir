@@ -1,6 +1,3 @@
-require_relative '../../../spec_helper'
-require 'pry'
-
 module StirSpec
   class WhoIsClient < Stir::SoapClient
 

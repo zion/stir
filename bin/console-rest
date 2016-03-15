@@ -4,9 +4,8 @@ $PROJECT_ROOT = File.expand_path("../", __dir__)
 
 require 'bundler/setup'
 require 'pry'
-require 'stir/rest'
-#require 'stir/soap'
-#require 'stir/all'
+#require 'stir/rest'
+require 'stir/all'
 
 Stir.configure do |config|
   config.path = File.join($PROJECT_ROOT, 'spec', 'examples', 'stir')
