@@ -14,6 +14,10 @@ Stir.configure do |config|
 end
 
 client = StirSpec::RestSpec.new
+client.all_posts
+
+puts client.response
+puts client.response.code
 
 
 binding.pry

@@ -4,6 +4,7 @@ require 'stir/version'
 
 Gem::Specification.new do |spec|
   spec.name = 'stir'
+  spec.required_ruby_version = '>= 2.0.0'
   spec.version = Stir::VERSION
   spec.authors = ['Umair Chagani', 'Wallace Harwood', 'Lance Howard']
   spec.email = ['umair.chagani@manheim.com', 'wallace.harwood@manheim.com', 'lance.howard@manheim.com']

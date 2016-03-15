@@ -1,6 +1,7 @@
 $LOAD_PATH << File.dirname(__FILE__)
 require 'active_support/all'
 require 'base/response'
+require 'base/client'
 
 module Stir
   class PathNotFoundError < StandardError; end
