@@ -1,13 +1,8 @@
 module Stir
   module Operations
-
     def self.included(base)
       base.extend(ClassMethods)
       base.class_eval { include Response }
-    end
-
-    def operations
-      @operations
     end
 
     def call_operation(service_config, method, message)
@@ -15,10 +10,16 @@ module Stir
       @response = @client.call(method, message: message)
     end
 
+    def self.create_operations_method(client)
+      Stir::SoapClient.send(:define_method, "operations") do
+        client.operations
+      end
+    end
+
     def self.set_operations(service_config)
       client = Savon.client(service_config)
-      @operations = client.operations
-      @operations.each do |name|
+      create_operations_method(client)
+      client.operations.each do |name|
         Stir::SoapClient.send(:define_method, name) do |message|
           call_operation(service_config, name.to_sym, message)
         end
@@ -26,12 +27,9 @@ module Stir
     end
 
     module ClassMethods
-
       def operation(old_name, new_name)
         #this needs to run after configuration
-        #alias_method new_name.to_sym, old_name.to_sym
       end
     end
-
   end
 end
