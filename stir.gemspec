@@ -15,7 +15,7 @@ Gem::Specification.new do |spec|
   spec.files = Dir['lib/**/*']
   spec.require_paths = ['lib']
 
-  spec.add_runtime_dependency('activesupport', '~> 4.0.0')
+  spec.add_runtime_dependency('activesupport', '>= 4.0.0')
 
   spec.add_development_dependency('pry', '~> 0.10.1')
   spec.add_development_dependency('pry-nav', '~> 0.2.4')
