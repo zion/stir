@@ -1,0 +1,19 @@
+{
+  "animals": [
+    {
+      "id": 1,
+      "type": "elephant",
+      "name": "Dumbo"
+    },
+    {
+      "id": 2,
+      "type": "Lion",
+      "author": "Mufasa"
+    },
+    {
+      "id": 3,
+      "type": "Monkey",
+      "author": "Rafiki"
+    }
+  ]
+}

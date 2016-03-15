@@ -1,0 +1,20 @@
+#!/usr/bin/env ruby
+
+$PROJECT_ROOT = File.expand_path("../", __dir__)
+
+require 'bundler/setup'
+require 'pry'
+require 'stir/rest'
+#require 'stir/soap'
+#require 'stir/all'
+
+Stir.configure do |config|
+  config.path = File.join($PROJECT_ROOT, 'spec', 'examples', 'stir')
+  config.environment = 'dev'
+  config.version = 'v1'
+end
+
+client = StirSpec::RestSpec.new
+
+
+binding.pry

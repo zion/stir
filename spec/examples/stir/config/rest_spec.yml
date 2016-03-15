@@ -1,0 +1,12 @@
+v1:
+  dev:
+    base_uri: http://localhost:3000
+    headers:
+      Content-Type: application/json
+  uat:
+    base_uri: http://localhost:3000
+    headers:
+      Content-Type: application/json
+      X-Mashery-Oauth-User-Context: "{'username':'jsaunders'}"
+  prod:
+    base_uri: http://localhost:3000

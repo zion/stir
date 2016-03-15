@@ -1,0 +1,5 @@
+v1:
+  dev:
+    base_uri: http://localhost:5000
+    headers:
+      Content-Type: application/json

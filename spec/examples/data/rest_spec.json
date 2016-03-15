@@ -1,0 +1,29 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "stir-rest-client",
+      "author": "uchagani"
+    },
+    {
+      "id": 2,
+      "title": "Rich Dad, Poor Dad",
+      "author": "rkiyosaki"
+    },
+    {
+      "id": 3,
+      "title": "The Warren Buffet Way",
+      "author": "Robert Hagstorm"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "Lorem ipsum dolor sit amet, alienum fabellas in nam, viris inciderint et qui. Mea te nonumy dolorem.",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "Umair Chagani"
+  }
+}
