@@ -1,5 +1,6 @@
 $LOAD_PATH << File.dirname(__FILE__)
 require 'active_support/all'
+require 'base/configuration'
 require 'base/response'
 require 'base/client'
 
