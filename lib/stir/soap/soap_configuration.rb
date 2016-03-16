@@ -26,14 +26,9 @@ module Stir
       @service_config
     end
 
-    def reload_operations!
-      Stir::Operations.set_operations(@service_config)
-    end
-
     def config_file=(value)
       @config_file = value
       reload_configs!
-      reload_operations!
     end
 
     private

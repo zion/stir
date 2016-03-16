@@ -14,6 +14,7 @@ Stir.configure do |config|
 end
 
 client = StirSpec::WhoIsClient.new
+client2 = StirSpec::WhoIsClient2.new
 message = { 'HostName' => "manheim.com" }
 
 #client.operations # a list of valid operation names from the service
