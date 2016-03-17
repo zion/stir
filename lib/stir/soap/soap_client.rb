@@ -7,5 +7,10 @@ module Stir
       set_default_options_for(subclass)
     end
 
+    def initialize
+      super
+      define_operations!
+    end
+
   end
 end

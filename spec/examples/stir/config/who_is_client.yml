@@ -1,4 +1,4 @@
 v1:
   dev:
     wsdl: http://www.webservicex.net/whois.asmx?WSDL
-    log: false
+    log: true

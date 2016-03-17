@@ -14,11 +14,14 @@ Stir.configure do |config|
 end
 
 client = StirSpec::WhoIsClient.new
-message = { 'HostName' => "manheim.com" }
+client2 = StirSpec::WhoIsClient2.new
+message = {'HostName' => "manheim.com"}
+message_sym = {HostName: "manheim.com"}
 
-response = client.get_who_is(message) #call method directly, since we defined it#
-puts response
-puts response.http.code
+
+#response = client.get_who_is(message: message) #call method directly, since we defined it#
+#puts response
+#puts response.http.code
 
 #client.operations # a list of valid operation names from the service
 # #response object will be the full response from savon
