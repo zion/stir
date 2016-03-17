@@ -5,7 +5,7 @@ module Stir
     end
 
     def define_operations!
-      @operations = get_operations
+      @operations = operations
       @operations.each do |op|
         next if self.methods.include?(op)
         self.class.send(:define_method, op) do |*args|
@@ -15,13 +15,7 @@ module Stir
     end
 
     def operations
-      return @operations unless @operations.empty?
-      []
-    end
-
-    def method_missing(name, *args, &block)
-      client = get_client
-      client.send(name, *args, &block) if client.respond_to?(name)
+      get_operations
     end
 
     private
