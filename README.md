@@ -54,8 +54,8 @@ Stir.configure do |config|
 end
 ```
 
-#### Client and Config association
-STiR will automatically associate your client class file (ie, my_client.rb) with a config file of the same base name (ie, my_client.yml). There are times when you may want your client file and config file to not use the same name. For example, if you want multiple clients to sahre the came config. That is accomplished by passing the config file name to the client by calling the *config_file* method in the client file.
+#### Client and Config Association
+STiR will automatically associate your client class file (ie, my_client.rb) with a config file of the same base name (ie, my_client.yml). There are times when you may want your client file and config file to not use the same name. For example, if you want multiple clients to share the same config. That is accomplished by passing the config file name to the client when calling the *config_file* method in the client file.
 
 ```ruby
 module Client
