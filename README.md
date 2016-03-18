@@ -145,5 +145,5 @@ end
 
 ### SOAP Clients
 #### Defining SOAP Operations
-#### Definising SOAP Response Objects
+#### Definiing SOAP Response Objects
 
