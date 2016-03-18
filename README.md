@@ -27,7 +27,7 @@ require 'stir/all' # installs both soap and rest componants
 The main concept behind STiR is creating a lightweight *client* to consume and test a
 web service. At a minimum, you need to define 2 things:
 
-1. A *client* class that will give you the ability interact with the web service and to model
+1. A *client* class that will give you the ability to interact with the web service and to model
 the responses it returns.
 
 2. A *YAML* file that contains configuration information about the service you are testing. In the
