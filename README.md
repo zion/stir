@@ -178,7 +178,7 @@ See the Savon documentation for more information on these optional settings.
 http://savonrb.com/version2/
 
 ### SOAP Clients
-To create a STiR SOAp *client*, create a new class in your clients directory. Your client
+To create a STiR SOAP *client*, create a new class in your clients directory. Your client
 class extends the **Stir::SoapClient** class, which allows you to define operations
 as well as methods for the handling & modeling of the responses you receive from the service.
 
@@ -192,5 +192,25 @@ module Client
 end
 ```
 #### Defining SOAP Operations
+
+If a wsdl is provided, perations are automatically defined as methods in the client class, there is no need to do that manually. However, if a wsdl is not provided, then operations must be defined manually in the client class using the **operation** method.
+
+```ruby
+operation(:valid_operation_name) # where valid_operation_name matches an operation
+```
+
+If you provide a wsdl, and the operations are automatically defined as methods, you can use the **operation** method to alias an operation to a new name from inside the client class.
+
+```ruby
+operation(:old_operation_name, :new_operation_name)
+```
+
+Operations are then calles as methods on the client class, and can be given the same args that a normal savon **call* method takes.
+
+```ruby
+client = SoapClientName.new
+client.operation_name(message: { foo: "bar" })
+```
+
 #### Definiing SOAP Response Objects
 
