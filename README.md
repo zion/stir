@@ -20,7 +20,7 @@ You can require STiR for testing only REST services, only SOAP services, or both
 ```ruby
 require 'stir/rest' # only installs rest componants
 require 'stir/soap' # only installs soap componants
-require 'stir/all' # installs both soap and rest comonants
+require 'stir/all' # installs both soap and rest componants
 ```
 
 ## Using STiR
