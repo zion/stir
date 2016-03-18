@@ -16,7 +16,7 @@ Or add it to your Gemfile:
 gem 'stir'
 ```
 
-You can require stir for testing only REST services, only SOAP services, or both!:
+You can require STiR for testing only REST services, only SOAP services, or both!:
 ```ruby
 require 'stir/rest' # only installs rest componants
 require 'stir/soap' # only installs soap componants
