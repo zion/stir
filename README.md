@@ -141,9 +141,56 @@ end
 ## Testing SOAP Services
 
 ### SOAP Config
+STiR uses a YAML file for defining data about the service you are testing. For SOAP services,
+this includes the *wsdl* for each environment you are testing as well as other configuration
+information.
+
+```ruby
+---
+v1: #version
+    qa: #environment
+      wsdl: 'http://localhost:9393?wsdl'
+    dev: #environment
+      wsdl: 'http://localhost:9394?wsdl'
+```
+
 #### SOAP Config Default Options
+For each environment you define you can set the following default options:
+```ruby
+wsdl: # minimum required option
+endpoint:
+namespace:
+proxy:
+open_timeout:
+read_timeout:
+soap_header:
+encoding:
+basic_auth:
+digest_auth:
+log:
+log_level:
+pretty_print_xml:
+wsse_auth:
+```
+
+See the Savon documentation for more information on these optional settings.
+
+http://savonrb.com/version2/
 
 ### SOAP Clients
+To create a STiR SOAp *client*, create a new class in your clients directory. Your client
+class extends the **Stir::SoapClient** class, which allows you to define operations
+as well as methods for the handling & modeling of the responses you receive from the service.
+
+```ruby
+module Client
+  class SoapClientName < Stir::SoapClient
+
+    # client info goes here
+
+  end
+end
+```
 #### Defining SOAP Operations
 #### Definiing SOAP Response Objects
 
