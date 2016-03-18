@@ -107,7 +107,7 @@ local_port:
 base_uri:
 debug_output:
 headers:
-onnection_adapter:
+connection_adapter:
 pem:
 query_string_normalizer:
 ```
