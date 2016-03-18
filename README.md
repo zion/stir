@@ -3,7 +3,7 @@
 
 STiR is a lightweight framework for testing web services. It uses HTTParty under the
 covers for REST services and Savon for SOAP services. The framework is designed to be
-fairly agnostic to both the type of service being tested.
+fairly agnostic to the type of service being tested.
 
 ## Installing STiR
 Install the gem manually:
