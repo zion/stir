@@ -132,8 +132,34 @@ end
 ```
 
 #### Defining REST Endpoints
--how to define
--passing in args
+The Base URI for a REST service is defined in the config. The rest of the endpoint is defined in the client class. You define the endpoint by passing a block with the endpoint information to a method named after the verb, and providing a name for the endpoint as a symbol.
+```ruby
+verb(:symbol) { '/endpoint'  }
+```
+
+For example, if you had an endpoint that is "https:/localhost/posts" for **get** requests, you would define it as follows:
+```ruby
+    get(:all_posts) { '/posts' }
+```
+
+You would then be able to call the newly defined **all_posts** method against the client class.
+
+Passing in args to the endpoint are done by passing a hash of the args to the endpoint method. The endpoint is defined using the **%{arg}** format. For example, if you have to pass in **ID** to the endpoint the method call, and endpoint would be:
+```ruby
+get(:post) { '/posts/%{id}' } #defining the endpoint
+```
+```ruby
+client_class.post { id: "id_value" } #calling the post method
+```
+
+You can pass in multiple args the same way:
+```ruby
+get(:posts_for) { '/posts/%{first_arg}/%{second_arg}' } #defining the endpoint
+```
+```ruby
+client_class.post { first_arg: "foo", second_arg: "bar" } #calling the post method
+```
+
 
 #### Defining REST Reponse Objects
 - I dont like calling them objects. Is there a better word?
@@ -212,5 +238,5 @@ client = SoapClientName.new
 client.operation_name(message: { foo: "bar" })
 ```
 
-#### Definiing SOAP Response Objects
+#### Defining SOAP Response Objects
 
