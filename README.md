@@ -162,7 +162,7 @@ client_class.posts_for { first_arg: "foo", second_arg: "bar" } #calling the post
 
 
 #### Defining REST Reponse Objects
-SOAP and REST response objects are defined in the same way. See "Defining Response Objects below.
+SOAP and REST response objects are defined in the same way. See "Defining Response Objects" below.
 
 ## Testing SOAP Services
 
@@ -239,10 +239,10 @@ client.operation_name(message: { foo: "bar" })
 ```
 
 #### Defining SOAP Response Objects
-SOAP and REST response objects are defined in the same way. See "Defining Response Objects below.
+SOAP and REST response objects are defined in the same way. See "Defining Response Objects" below.
 
 ### Defining Response Objects
-STiR strives to provide the ability to create something similar to the 'page object model' for testing web sites to the responses when testing services. This is done my defining **response** objects in the client class. Savon and HTTParty return responses as xml(json? hash? we need to standardize) objects. Items in the response can be mapped to response objects in the client class to allow for all of the benefits associated with page objects.Response objects are defined by calling the **response** method, and assignming a method name, and then passing the mapping to the method in a block, as follows:
+STiR strives to provide the ability to create something similar to the 'page object model' for testing web sites to the responses when testing services. This is done my defining **response** objects in the client class. Savon and HTTParty return responses as xml(json? hash? we need to standardize) objects. Items in the response can be mapped to response objects in the client class to allow for all of the benefits associated with page objects. Response objects are defined by calling the **response** method, and assigning a method name, and then passing the mapping to the method in a block, as follows:
 ```ruby
 response(:foo) { response['bar'] }
 ```
