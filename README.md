@@ -144,7 +144,7 @@ For example, if you had an endpoint that is "https:/localhost/posts" for **get**
 
 You would then be able to call the newly defined **all_posts** method against the client class.
 
-Passing in args to the endpoint are done by passing a hash of the args to the endpoint method. The endpoint is defined using the **%{arg}** format. For example, if you have to pass in **ID** to the endpoint the method call, and endpoint would be:
+Passing in args to the endpoint are done by passing a hash of the args to the endpoint method. The endpoint is defined using the **%{arg}** format. For example, if you have to pass in **ID** to the endpoint, the endpoint definition and method call are as follows:
 ```ruby
 get(:post) { '/posts/%{id}' } #defining the endpoint
 ```
@@ -157,7 +157,7 @@ You can pass in multiple args the same way:
 get(:posts_for) { '/posts/%{first_arg}/%{second_arg}' } #defining the endpoint
 ```
 ```ruby
-client_class.post { first_arg: "foo", second_arg: "bar" } #calling the post method
+client_class.posts_for { first_arg: "foo", second_arg: "bar" } #calling the posts_for method
 ```
 
 
