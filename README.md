@@ -18,9 +18,9 @@ gem 'stir'
 
 You can require STiR for testing only REST services, only SOAP services, or both!:
 ```ruby
-require 'stir/rest' # only installs rest componants
-require 'stir/soap' # only installs soap componants
-require 'stir/all' # installs both soap and rest componants
+require 'stir/rest' # only installs rest components
+require 'stir/soap' # only installs soap components
+require 'stir/all' # installs both soap and rest components
 ```
 
 ## Using STiR
@@ -162,7 +162,7 @@ client_class.posts_for { first_arg: "foo", second_arg: "bar" } #calling the post
 
 
 #### Defining REST Reponse Objects
-- I dont like calling them objects. Is there a better word?
+SOAP and REST response objects are defined in the same way. See "Defining Response Objects below.
 
 ## Testing SOAP Services
 
@@ -239,4 +239,14 @@ client.operation_name(message: { foo: "bar" })
 ```
 
 #### Defining SOAP Response Objects
+SOAP and REST response objects are defined in the same way. See "Defining Response Objects below.
 
+### Defining Response Objects
+STiR strives to provide the ability to create something similar to the 'page object model' for testing web sites to the responses when testing services. This is done my defining **response** objects in the client class. Savon and HTTParty return responses as xml(json? hash? we need to standardize) objects. Items in the response can be mapped to response objects in the client class to allow for all of the benefits associated with page objects.Response objects are defined by calling the **response** method, and assignming a method name, and then passing the mapping to the method in a block, as follows:
+```ruby
+response(:foo) { response['bar'] }
+```
+Calling the response object from the client class happens after a call has been made to the service, and is made against the client class:
+```ruby
+client_class.foo #returns the result of "the "bar" key from the response json"
+```
