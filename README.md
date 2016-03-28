@@ -70,6 +70,14 @@ end
 
 ## Testing Services
 
+### Rest Config Example
+```ruby
+v1: #version
+    qa: #environment
+      base_uri: 'http://localhost:9393'
+    dev: #environment
+      base_uri: 'http://localhost:9394'
+```
 ### Rest Client Example
 ```ruby
 module Client
@@ -87,7 +95,15 @@ client = Client::RestClientName.new
 client.post { id: 15 }
 client.foo # => value from 'bar' in reponse object
 ```
-
+### Soap Config Example
+```ruby
+---
+v1: #version
+    qa: #environment
+      wsdl: 'http://localhost:9393?wsdl'
+    dev: #environment
+      wsdl: 'http://localhost:9394?wsdl'
+```
 ### Soap Client Example
 ```ruby
 module Client
