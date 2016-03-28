@@ -68,185 +68,41 @@ module Client
 end
 ```
 
-## Testing REST Services
+## Testing Services
 
-### REST Config
-STiR uses a YAML file for defining data about the service you are testing. For REST services,
-this includes the *base_uri* for each environment you are testing as well as other configuration
-information.
-
-```ruby
----
-v1: #version
-    qa: #environment
-      base_uri: 'http://localhost:9393'
-    dev: #environment
-      base_uri: 'http://localhost:9394'
-```
-
-#### REST Config Default Options
-For each environment you define you can set the following default options:
-```ruby
-basic_auth:
-digest_auth:
-format:
-timeout:
-no_follow:
-maintain_method_across_redirects:
-ssl_ca_file:
-ssl_ca_path:
-body:
-http_proxyaddr:
-http_proxyport:
-http_proxyuser:
-http_proxypass:
-limit:
-query:
-local_host:
-local_port:
-base_uri:
-debug_output:
-headers:
-connection_adapter:
-pem:
-query_string_normalizer:
-```
-
-See the HTTParty documentation for more information on these optional settings.
-
-http://www.rubydoc.info/github/jnunemaker/httparty
-
-### REST Clients
-To create a STiR REST *client*, create a new class in your clients directory. Your client
-class extends the **Stir::RestClient** class, which allows you to define endpoints
-as well as methods for the handling & modeling of the responses you receive from the service.
-
+### Rest Client Example
 ```ruby
 module Client
   class RestClientName < Stir::RestClient
 
-    # client info goes here
+    get(:post) { '/posts/%{id}' } #defining the endpoint
+    response(:foo) { response['bar'] } #defining item from response object
 
   end
 end
 ```
-
-#### Defining REST Endpoints
-The Base URI for a REST service is defined in the config. The rest of the endpoint is defined in the client class. You define the endpoint by passing a block with the endpoint information to a method named after the verb, and providing a name for the endpoint as a symbol.
+### Using Rest Cleint
 ```ruby
-verb(:symbol) { '/endpoint'  }
+client = Client::RestClientName.new
+client.post { id: 15 }
+client.foo # => value from 'bar' in reponse object
 ```
 
-For example, if you had an endpoint that is "https:/localhost/posts" for **get** requests, you would define it as follows:
-```ruby
-    get(:all_posts) { '/posts' }
-```
-
-You would then be able to call the newly defined **all_posts** method against the client class.
-
-Passing in args to the endpoint are done by passing a hash of the args to the endpoint method. The endpoint is defined using the **%{arg}** format. For example, if you have to pass in **ID** to the endpoint, the endpoint definition and method call are as follows:
-```ruby
-get(:post) { '/posts/%{id}' } #defining the endpoint
-```
-```ruby
-client_class.post { id: "id_value" } #calling the post method
-```
-
-You can pass in multiple args the same way:
-```ruby
-get(:posts_for) { '/posts/%{first_arg}/%{second_arg}' } #defining the endpoint
-```
-```ruby
-client_class.posts_for { first_arg: "foo", second_arg: "bar" } #calling the posts_for method
-```
-
-
-#### Defining REST Reponse Objects
-SOAP and REST response objects are defined in the same way. See "Defining Response Objects" below.
-
-## Testing SOAP Services
-
-### SOAP Config
-STiR uses a YAML file for defining data about the service you are testing. For SOAP services,
-this includes the *wsdl* for each environment you are testing as well as other configuration
-information.
-
-```ruby
----
-v1: #version
-    qa: #environment
-      wsdl: 'http://localhost:9393?wsdl'
-    dev: #environment
-      wsdl: 'http://localhost:9394?wsdl'
-```
-
-#### SOAP Config Default Options
-For each environment you define you can set the following default options:
-```ruby
-wsdl: # minimum required option
-endpoint:
-namespace:
-proxy:
-open_timeout:
-read_timeout:
-soap_header:
-encoding:
-basic_auth:
-digest_auth:
-log:
-log_level:
-pretty_print_xml:
-wsse_auth:
-```
-
-See the Savon documentation for more information on these optional settings.
-
-http://savonrb.com/version2/
-
-### SOAP Clients
-To create a STiR SOAP *client*, create a new class in your clients directory. Your client
-class extends the **Stir::SoapClient** class, which allows you to define operations
-as well as methods for the handling & modeling of the responses you receive from the service.
-
+### Soap Client Example
 ```ruby
 module Client
   class SoapClientName < Stir::SoapClient
 
-    # client info goes here
+    operation(:old_name, :new_name) #alias an operation name only works is you provide wsdl
+    operation(:operation_name) #only required if you dont provide a wsdl
+    response(:foo) { response['bar'] } #defining item from response object
 
   end
 end
 ```
-#### Defining SOAP Operations
-
-If a wsdl is provided, perations are automatically defined as methods in the client class, there is no need to do that manually. However, if a wsdl is not provided, then operations must be defined manually in the client class using the **operation** method.
-
+### Using Soap Client
 ```ruby
-operation(:valid_operation_name) # where valid_operation_name matches an operation
-```
-
-If you provide a wsdl, and the operations are automatically defined as methods, you can use the **operation** method to alias an operation to a new name from inside the client class.
-
-```ruby
-operation(:old_operation_name, :new_operation_name)
-```
-
-Operations are then calles as methods on the client class, and can be given the same args that a normal savon **call* method takes.
-
-```ruby
-client = SoapClientName.new
-client.operation_name(message: { foo: "bar" })
-```
-
-#### Defining SOAP Response Objects
-SOAP and REST response objects are defined in the same way. See "Defining Response Objects" below.
-
-### Defining Response Objects
-STiR strives to provide the ability to create something similar to the 'page object model' for testing web sites to the responses when testing services. This is done my defining **response** objects in the client class. Savon and HTTParty return responses as xml(json? hash? we need to standardize) objects. Items in the response can be mapped to response objects in the client class to allow for all of the benefits associated with page objects. Response objects are defined by calling the **response** method, and assigning a method name, and then passing the mapping to the method in a block, as follows:
-```ruby
-response(:foo) { response['bar'] }
-```
-Calling the response object from the client class happens after a call has been made to the service, and is made against the client class:
-```ruby
-client_class.foo #returns the result of "the "bar" key from the response json"
+client = Client::SoapClientName
+client.operation_name(message: {id: 15})
+client.foo # => value from 'bar' in reponse object
 ```
