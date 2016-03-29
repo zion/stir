@@ -30,7 +30,7 @@ module Stir
       private
       def endpoint(name, method, &block)
         send(:define_method, name) do |*args|
-          @response = HTTParty.send(method, URI.escape(yield.interpolate!(args.first)), merge_configs(args.flatten.first))
+          @response = HTTParty.send(method, URI.escape(yield.interpolate(args.first)), merge_configs(args.flatten.first))
         end
       end
     end
