@@ -9,6 +9,7 @@ module StirSpec
     post(:new_profile) { '/profile' }
     get(:profile) { '/profile' }
     get(:posts_for) { '/posts?author=%{name}' }
+    get(:two_param_test) { '/%{endpoint}/%{id}' }
 
     response(:post_author) { response.first['author'] }
     response(:profile_name) { response['name'] }
