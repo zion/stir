@@ -1,9 +1,6 @@
 $LOAD_PATH << File.dirname(__FILE__)
 require 'active_support/all'
 require 'base/response'
-require 'core_ext/string'
-
-String.include CoreExt::String
 
 module Stir
   class PathNotFoundError < StandardError; end
