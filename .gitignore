@@ -18,3 +18,4 @@
 /lib/bundler/man/
 .idea/
 Gemfile.lock
+.DS_Store
