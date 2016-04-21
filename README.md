@@ -47,7 +47,7 @@ end
 ```
 
 # Usage
-#### Define a configuration
+#### Define a REST configuration
 
 ```yaml
 # ~/project_dir/stir/config/sample.yml
@@ -56,7 +56,7 @@ v1:
     base_uri: http://localhost:3000
 ```
 
-#### Define a client
+#### Define a REST client
 
 ```ruby
 # ~/project_dir/stir/client/sample.rb
@@ -68,7 +68,7 @@ end
 
 STiR will automatically find the correct config file for your client.  For every client, STiR will look for a config file with the same name as the class name of the client.  In the example above, STiR will look for a config file named ```sample.yml``` inside the config directory
 
-### Using STiR in Tests
+### Using STiR in REST Tests
 ```ruby
 describe 'Posts' do
   let(:sample) { Sample.new }
@@ -81,32 +81,36 @@ describe 'Posts' do
 end
 ```
 
-
-
-### Soap Config Example
+### Define a SOAP configuration
 ```ruby
 ---
+# ~/project_dir/stir/config/soap_sample.yml
 v1: #version
     qa: #environment
       wsdl: 'http://localhost:9393?wsdl'
     dev: #environment
       wsdl: 'http://localhost:9394?wsdl'
 ```
-### Soap Client Example
+
+### Define a SOAP client
 ```ruby
-module Client
-  class SoapClientName < Stir::SoapClient
 
-    operation(:old_name, :new_name) #alias an operation name only works is you provide wsdl
-    operation(:operation_name) #only required if you dont provide a wsdl
-    response(:foo) { response['bar'] } #defining item from response object
-
-  end
+class SoapSample < Stir::SoapClient
+  operation(:old_name, :new_name) #alias an operation name only works is you provide wsdl
+  operation(:user_id_by_name) #only required if you dont provide a wsdl
+  response(:id) { response['id'] } #defining item from response object
 end
 ```
-### Using Soap Client
+
+### Using STiR in SOAP Tests
 ```ruby
-client = Client::SoapClientName
-client.operation_name(message: {id: 15})
-client.foo # => value from 'bar' in reponse object
+describe 'Users' do
+  let(:sample) { SoapSample.new }
+  describe 'get user id by name' do
+    it 'should return the correct id' do
+      sample.user_id_by_name( message: { "user_name" => "test_user" } )
+      expect(sample.id).to eql '259'
+    end
+  end
+end
 ```
