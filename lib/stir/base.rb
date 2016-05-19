@@ -3,6 +3,11 @@ require 'active_support/all'
 require 'base/configuration'
 require 'base/response'
 require 'base/client'
+require 'core_ext/string'
+
+# Work around for ruby 2. The include method is not private in ruby 2.1+
+String.send(:include, CoreExt::String)
+
 
 module Stir
   class PathNotFoundError < StandardError; end
