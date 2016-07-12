@@ -15,10 +15,10 @@ module Stir
        :ssl_ca_file, :ssl_ca_path]
     end
 
-    def transform_config_for_httparty(params, args_passed_in)
-      args_passed_in = {} if args_passed_in.nil?
+    def transform_config_for_httparty(params, args_passed_in={})
       params = params.to_hash
       params['basic_auth'].symbolize_keys! if params['basic_auth']
+      params['debug_output'] = eval(params['debug_output']) if params['debug_output']
       params['headers'] = headers if headers
       params['headers'].merge!(args_passed_in[:headers]) if args_passed_in[:headers]
       params
