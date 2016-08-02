@@ -44,7 +44,7 @@ module Stir
 
       def load_configs(filename)
         raise LoadError.new("#{filename} not found.") unless File.exists?(filename)
-        YAML.load_file(filename)[Stir.version][Stir.environment].with_indifferent_access
+        YAML.load(ERB.new(File.read(filename)).result)[Stir.version][Stir.environment].with_indifferent_access
       end
 
       def update_configs!(name, value)
