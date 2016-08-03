@@ -6,7 +6,6 @@ module Stir
       attr_accessor :debug_output
 
       def debug_output(stream = $stderr)
-        return if stream == $stderr
         @debug_output = stream
       end
     end
