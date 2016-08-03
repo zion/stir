@@ -2,7 +2,17 @@ module Stir
   module RestConfiguration
     include Stir::Base::Configuration
 
+    module ClassMethods
+      attr_accessor :debug_output
+
+      def debug_output(stream = $stderr)
+        return if stream == $stderr
+        @debug_output = stream
+      end
+    end
+
     def self.included(base)
+      base.extend(ClassMethods)
       set_default_options(base)
     end
 
@@ -22,6 +32,10 @@ module Stir
       params['headers'] = headers if headers
       params['headers'].merge!(args_passed_in[:headers]) if args_passed_in[:headers]
       params
+    end
+
+    def custom_config_initializers
+      self.debug_output = self.class.instance_variable_get('@debug_output')
     end
   end
 end

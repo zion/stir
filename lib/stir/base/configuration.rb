@@ -11,6 +11,7 @@ module Stir
         config_list.each { |x| self.class.send(:attr_accessor, x) }
         configure_callbacks!
         send(:config_file=, self.class.config_file)
+        custom_config_initializers
       end
 
       def reload_configs!
@@ -26,6 +27,9 @@ module Stir
       end
 
       private
+
+      def custom_config_initializers
+      end
 
       def config_list
         fail(NotImplementedError, 'You must provide a list of valid configuration options')
