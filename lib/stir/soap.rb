@@ -9,4 +9,5 @@ end
 require 'stir/base'
 require 'stir/soap/soap_configuration'
 require 'stir/soap/operations'
+require 'stir/soap/soap_response'
 require 'stir/soap/soap_client'
