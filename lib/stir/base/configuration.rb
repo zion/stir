@@ -11,6 +11,7 @@ module Stir
         config_list.each { |x| self.class.send(:attr_accessor, x) }
         configure_callbacks!
         send(:config_file=, self.class.config_file)
+        custom_config_initializers
       end
 
       def reload_configs!
@@ -26,6 +27,9 @@ module Stir
       end
 
       private
+
+      def custom_config_initializers
+      end
 
       def config_list
         fail(NotImplementedError, 'You must provide a list of valid configuration options')
@@ -44,7 +48,7 @@ module Stir
 
       def load_configs(filename)
         raise LoadError.new("#{filename} not found.") unless File.exists?(filename)
-        YAML.load_file(filename)[Stir.version][Stir.environment].with_indifferent_access
+        YAML.load(ERB.new(File.read(filename)).result)[Stir.version][Stir.environment].with_indifferent_access
       end
 
       def update_configs!(name, value)
