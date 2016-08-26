@@ -1,7 +1,7 @@
 module Stir
   module Base
     module Configuration
-      attr_accessor :service_config, :custom_config
+      attr_accessor :service_config, :config
 
       def self.included(base)
         base.extend(Default)
@@ -10,7 +10,7 @@ module Stir
       def initialize
         config_list.each { |x| self.class.send(:attr_accessor, x) }
         configure_callbacks!
-        send(:custom_config=, self.class.custom_config)
+        send(:config=, self.class.config)
         custom_config_initializers
       end
 
@@ -21,7 +21,7 @@ module Stir
         @service_config
       end
 
-      def custom_config=(value)
+      def config=(value)
         value = value.with_indifferent_access
         @environment = value[:environment]
         @version = value[:version]
@@ -85,7 +85,7 @@ module Stir
 
 
       module ClassMethods
-        attr_accessor :custom_config
+        attr_accessor :config
 
         def get_config_filepath(filename)
           File.join(Stir.path, 'config', "#{File.basename(filename)}.yml")

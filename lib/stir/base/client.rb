@@ -7,7 +7,7 @@ module Stir
           include Response
           attr_reader :response
         end
-        subclass.custom_config = { config_file: subclass.get_config_filepath(subclass.name.demodulize.underscore) }
+        subclass.config = { config_file: subclass.get_config_filepath(subclass.name.demodulize.underscore) }
       end
 
     end
