@@ -1,7 +1,7 @@
 module Stir
   module Base
     module Configuration
-      attr_accessor :service_config, :config_file
+      attr_accessor :service_config, :custom_config
 
       def self.included(base)
         base.extend(Default)
@@ -10,7 +10,7 @@ module Stir
       def initialize
         config_list.each { |x| self.class.send(:attr_accessor, x) }
         configure_callbacks!
-        send(:config_file=, self.class.config_file)
+        send(:custom_config=, self.class.custom_config)
         custom_config_initializers
       end
 
@@ -21,8 +21,11 @@ module Stir
         @service_config
       end
 
-      def config_file=(value)
-        @config_file = value
+      def custom_config=(value)
+        value = value.with_indifferent_access
+        @environment = value[:environment]
+        @version = value[:version]
+        @config_file = value[:config_file]
         reload_configs!
       end
 
@@ -48,7 +51,9 @@ module Stir
 
       def load_configs(filename)
         raise LoadError.new("#{filename} not found.") unless File.exists?(filename)
-        YAML.load(ERB.new(File.read(filename)).result)[Stir.version][Stir.environment].with_indifferent_access
+        version = @version ? @version : Stir.version
+        environment = @environment ? @environment : Stir.environment
+        YAML.load(ERB.new(File.read(filename)).result)[version][environment].with_indifferent_access
       end
 
       def update_configs!(name, value)
@@ -80,7 +85,7 @@ module Stir
 
 
       module ClassMethods
-        attr_accessor :config_file
+        attr_accessor :custom_config
 
         def get_config_filepath(filename)
           File.join(Stir.path, 'config', "#{File.basename(filename)}.yml")

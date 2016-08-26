@@ -1,0 +1,10 @@
+v1:
+  dev:
+    wsdl: http://www.msn.com
+    log: true
+
+99:
+  prod:
+    wsdl: http://www.boogers.com
+    log: true
+
