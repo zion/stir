@@ -3,7 +3,6 @@ module Stir
 
     def self.included(base)
       base.extend(ClassMethods)
-      base.class_eval { include Response }
     end
 
     module ClassMethods

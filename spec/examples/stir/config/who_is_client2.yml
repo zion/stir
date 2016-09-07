@@ -1,0 +1,7 @@
+v1:
+  dev:
+    endpoint: http://www.webservicex.net/whois.asmx
+    namespace: http://www.webservicex.net
+    convert_request_keys_to: :camelcase
+    namespace_identifier: :tns
+    log: true

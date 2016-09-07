@@ -1,0 +1,34 @@
+#!/usr/bin/env ruby
+
+$PROJECT_ROOT = File.expand_path("../", __dir__)
+
+require 'bundler/setup'
+require 'pry'
+#require 'stir/soap'
+require 'stir/all'
+
+Stir.configure do |config|
+  config.path = File.join($PROJECT_ROOT, 'spec', 'examples', 'stir')
+  config.environment = 'dev'
+  config.version = 'v1'
+end
+
+client = StirSpec::WhoIsClient.new
+client2 = StirSpec::WhoIsClient2.new
+message = {'HostName' => "manheim.com"}
+message_sym = {HostName: "manheim.com"}
+
+
+#response = client.get_who_is(message: message) #call method directly, since we defined it#
+#puts response
+#puts response.http.code
+
+#client.operations # a list of valid operation names from the service
+# #response object will be the full response from savon
+# response.body # this is how you ge the straight up body only
+# client.stupid_string_response#defining a value out of the response body
+# response.http.code #and here is the status code of the response
+# response.http.headers # here be the headers
+
+
+binding.pry

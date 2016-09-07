@@ -1,6 +1,7 @@
 v1:
   dev:
     base_uri: http://localhost:3000
+    debug_output: $stdout
     headers:
       Content-Type: application/json
   uat:

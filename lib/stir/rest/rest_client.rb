@@ -1,12 +1,10 @@
 module Stir
-  class RestClient
+  class RestClient < Stir::Base::Client
     include Stir::Endpoints
     include Stir::RestConfiguration
 
-    attr_reader :response
-
     def self.inherited(subclass)
-      subclass.config_file = subclass.get_config_filepath(subclass.name.demodulize.underscore)
+      set_default_options_for(subclass)
     end
 
   end
