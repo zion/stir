@@ -16,6 +16,7 @@ module Stir
       end
 
       def reload_configs!
+        verify_file(@config_file)
         verify_version_and_env(@config_file)
         @service_config = load_configs(@config_file)
         @service_config[:headers] = {} if @service_config[:headers].nil?
@@ -52,8 +53,11 @@ module Stir
         YAML.load(ERB.new(File.read(filename)).result)[Stir.version][Stir.environment].with_indifferent_access
       end
 
+      def verify_file(filename)
+        raise(ConfigurationError, "#{filename} not found.") unless File.exists?(filename)
+      end
+      
       def verify_version_and_env(filename)
-        raise LoadError.new("#{filename} not found.") unless File.exists?(filename)
         file = YAML.load(File.read(filename))
         raise(ConfigurationError, "Version: '#{Stir.version}' is not defined for this client in the config file.") unless file.has_key? Stir.version
         raise(ConfigurationError, "Environment: '#{Stir.environment}' is not defined for Version: '#{Stir.version}' in the config file.") unless file[Stir.version].has_key? Stir.environment
