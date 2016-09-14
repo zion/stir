@@ -49,15 +49,14 @@ module Stir
 
       def load_configs(filename)
         raise(ConfigurationError, "#{filename} not found.") unless File.exists?(filename)
-        file = verify_version_and_env(filename)
-        file[Stir.version][Stir.environment].with_indifferent_access
+        config = YAML.load(ERB.new(File.read(filename)).result)[Stir.version][Stir.environment].with_indifferent_access
+        verify_configs(config)
+        config
       end
 
-      def verify_version_and_env(filename)
-        file = YAML.load(File.read(filename))
-        raise(ConfigurationError, "Version: '#{Stir.version}' is not defined for this client in the config file.") unless file.has_key? Stir.version
-        raise(ConfigurationError, "Environment: '#{Stir.environment}' is not defined for Version: '#{Stir.version}' in the config file.") unless file[Stir.version].has_key? Stir.environment
-        file
+      def verify_configs(config)
+        raise(ConfigurationError, "Version: '#{Stir.version}' is not defined for this client in the config file.") unless config.has_key? Stir.version
+        raise(ConfigurationError, "Environment: '#{Stir.environment}' is not defined for Version: '#{Stir.version}' in the config file.") unless config[Stir.version].has_key? Stir.environment
       end
 
       def update_configs!(name, value)
