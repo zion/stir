@@ -55,8 +55,8 @@ module Stir
       def verify_version_and_env(filename)
         raise LoadError.new("#{filename} not found.") unless File.exists?(filename)
         file = YAML.load(File.read(filename))
-        fail(ConfigurationError, "Version: '#{Stir.version}' is not defined for this client in the config file.") unless file.has_key? Stir.version
-        fail(ConfigurationError, "Environment: '#{Stir.environment}' is not defined for Version: '#{Stir.version}' in the config file.") unless file[Stir.version].has_key? Stir.environment
+        raise(ConfigurationError, "Version: '#{Stir.version}' is not defined for this client in the config file.") unless file.has_key? Stir.version
+        raise(ConfigurationError, "Environment: '#{Stir.environment}' is not defined for Version: '#{Stir.version}' in the config file.") unless file[Stir.version].has_key? Stir.environment
       end
 
       def update_configs!(name, value)
