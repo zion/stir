@@ -19,4 +19,3 @@ client.all_posts
 puts client.response
 puts client.response.code
 
-

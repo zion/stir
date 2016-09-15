@@ -5,6 +5,15 @@ module Stir
       base.extend(ClassMethods)
     end
 
+    def routes(name, *args)
+      endpoints = self.class.send(:endpoints)
+      endpoint = nil
+      endpoints.each {|x| endpoint = x[name.to_sym] if x[name.to_sym]}
+      return nil if endpoint.nil?
+      base_uri + endpoint.interpolate(args.first)
+    end
+
+    private
     module ClassMethods
       def get(name, &block)
         endpoint(name, :get, &block)
@@ -31,6 +40,11 @@ module Stir
         send(:define_method, name) do |*args|
           @response = HTTParty.send(method, URI.escape(yield.interpolate(args.first)), merge_configs(args.flatten.first))
         end
+        endpoints.push({name => yield.to_s})
+      end
+
+      def endpoints
+        @endpoints ||= []
       end
     end
 
