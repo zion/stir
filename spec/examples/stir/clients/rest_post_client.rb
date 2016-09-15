@@ -1,6 +1,12 @@
 module StirSpec
   class RestSpec < Stir::RestClient
 
+    # self.config_file = File.join(Stir.path, 'config', 'hello.yml')
+    # self.config = {config_file: File.join(Stir.path, 'config', 'becky_with_the_good_hair.yml'),
+    #                environment: "prod",
+    #                version: 99}
+
+
     post(:new_post) { '/posts' }
     get(:all_posts) { '/posts' }
     get(:post) { '/posts/%{id}' }

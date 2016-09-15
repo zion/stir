@@ -1,7 +1,7 @@
 module Stir
   module Base
     module Configuration
-      attr_accessor :service_config, :config_file
+      attr_accessor :service_config, :config
       class ConfigurationError < StandardError; end
 
       def self.included(base)
@@ -11,7 +11,7 @@ module Stir
       def initialize
         config_list.each { |x| self.class.send(:attr_accessor, x) }
         configure_callbacks!
-        send(:config_file=, self.class.config_file)
+        send(:config=, self.class.config)
         custom_config_initializers
       end
 
@@ -22,8 +22,11 @@ module Stir
         @service_config
       end
 
-      def config_file=(value)
-        @config_file = value
+      def config=(value)
+        value = value.with_indifferent_access
+        @environment = (value.has_key? :environment) ? value[:environment] : Stir.environment
+        @version = (value.has_key? :version) ? value[:version] : Stir.version
+        @config_file = value[:config_file] if value[:config_file]
         reload_configs!
       end
 
@@ -51,12 +54,12 @@ module Stir
         raise(ConfigurationError, "#{filename} not found.") unless File.exists?(filename)
         config =  YAML.load(ERB.new(File.read(filename)).result)
         verify_configs(config)
-        config[Stir.version][Stir.environment].with_indifferent_access
+        config[@version][@environment].with_indifferent_access
       end
 
       def verify_configs(config)
-        raise(ConfigurationError, "Version: '#{Stir.version}' is not defined for this client in the config file.") unless config.has_key? Stir.version
-        raise(ConfigurationError, "Environment: '#{Stir.environment}' is not defined for Version: '#{Stir.version}' in the config file.") unless config[Stir.version].has_key? Stir.environment
+        raise(ConfigurationError, "Version: '#{@version}' is not defined for this client in the config file.") unless config.has_key? @version
+        raise(ConfigurationError, "Environment: '#{@environment}' is not defined for Version: '#{@version}' in the config file.") unless config[@version].has_key? @environment
       end
 
       def update_configs!(name, value)
@@ -88,7 +91,11 @@ module Stir
 
 
       module ClassMethods
-        attr_accessor :config_file
+        attr_accessor :config
+
+        def config_file=(value)
+          self.config = { config_file: value }
+        end
 
         def get_config_filepath(filename)
           File.join(Stir.path, 'config', "#{File.basename(filename)}.yml")
