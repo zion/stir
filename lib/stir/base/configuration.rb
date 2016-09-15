@@ -2,6 +2,7 @@ module Stir
   module Base
     module Configuration
       attr_accessor :service_config, :config_file
+      class ConfigurationError < StandardError; end
 
       def self.included(base)
         base.extend(Default)
@@ -47,8 +48,15 @@ module Stir
       end
 
       def load_configs(filename)
-        raise LoadError.new("#{filename} not found.") unless File.exists?(filename)
-        YAML.load(ERB.new(File.read(filename)).result)[Stir.version][Stir.environment].with_indifferent_access
+        raise(ConfigurationError, "#{filename} not found.") unless File.exists?(filename)
+        config =  YAML.load(ERB.new(File.read(filename)).result)
+        verify_configs(config)
+        config[Stir.version][Stir.environment].with_indifferent_access
+      end
+
+      def verify_configs(config)
+        raise(ConfigurationError, "Version: '#{Stir.version}' is not defined for this client in the config file.") unless config.has_key? Stir.version
+        raise(ConfigurationError, "Environment: '#{Stir.environment}' is not defined for Version: '#{Stir.version}' in the config file.") unless config[Stir.version].has_key? Stir.environment
       end
 
       def update_configs!(name, value)
