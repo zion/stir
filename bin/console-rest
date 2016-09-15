@@ -20,4 +20,3 @@ puts client.response
 puts client.response.code
 
 
-binding.pry
