@@ -5,16 +5,12 @@ module Stir
       base.extend(ClassMethods)
     end
 
-    def routes(name=nil, *args)
+    def routes(name, *args)
       endpoints = self.class.send(:endpoints)
-      if name.nil?
-        'Please pass in an endpoint name.'
-      else
-        endpoint = nil
-        endpoints.each {|x| endpoint = x[name.to_sym] if x[name.to_sym]}
-        raise "Endpoint '#{name}' is not defined." if endpoint.nil?
-        base_uri + endpoint.interpolate(args.first)
-      end
+      endpoint = nil
+      endpoints.each {|x| endpoint = x[name.to_sym] if x[name.to_sym]}
+      raise "Endpoint '#{name}' is not defined." if endpoint.nil?
+      base_uri + endpoint.interpolate(args.first)
     end
 
     private
