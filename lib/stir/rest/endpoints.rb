@@ -9,7 +9,7 @@ module Stir
       endpoints = self.class.send(:endpoints)
       endpoint = nil
       endpoints.each {|x| endpoint = x[name.to_sym] if x[name.to_sym]}
-      raise "Endpoint '#{name}' is not defined." if endpoint.nil?
+      return nil if endpoint.nil?
       base_uri + endpoint.interpolate(args.first)
     end
 
