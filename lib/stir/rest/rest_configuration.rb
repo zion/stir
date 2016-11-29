@@ -21,7 +21,7 @@ module Stir
       [:body, :http_proxyaddr, :http_proxyport, :http_proxyuser, :http_proxypass, :limit, :query, :timeout,
        :local_host, :local_port, :base_uri, :basic_auth, :debug_output, :digest_auth, :format, :headers,
        :maintain_method_across_redirects, :no_follow, :parser, :connection_adapter, :pem, :query_string_normalizer,
-       :ssl_ca_file, :ssl_ca_path]
+       :ssl_ca_file, :ssl_ca_path, :verify]
     end
 
     def transform_config_for_httparty(params, args_passed_in)
