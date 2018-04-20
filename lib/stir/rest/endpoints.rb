@@ -35,7 +35,7 @@ module Stir
         endpoint(name, :delete, &block)
       end
       
-       def patch(name, &block)
+      def patch(name, &block)
         endpoint(name, :patch, &block)
       end
 
