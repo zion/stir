@@ -34,6 +34,10 @@ module Stir
       def delete(name, &block)
         endpoint(name, :delete, &block)
       end
+      
+      def patch(name, &block)
+        endpoint(name, :patch, &block)
+      end
 
       private
       def endpoint(name, method, &block)
