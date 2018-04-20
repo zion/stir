@@ -61,7 +61,9 @@ v1:
 ```ruby
 # ~/project_dir/stir/client/sample.rb
 class Sample < Stir::RestClient
-  get(:post_by_id) { '/posts/%{id}' } #defining the endpoint
+  get(:post_by_id) { '/posts/%{id}' } #defining the get endpoint
+  post(:add_post) { '/posts' } #defining a post endpoint
+  
   response(:post_name) { response['postName'] } #defining item from response object
 end
 ```
@@ -72,10 +74,19 @@ STiR will automatically find the correct config file for your client.  For every
 ```ruby
 describe 'Posts' do
   let(:sample) { Sample.new }
+  
   describe 'get post by id' do
     it 'should return the correct post' do
       sample.post_by_id(id: 15)
       expect(sample.post_name).to eql 'Sample Post Name'
+    end
+  end
+  
+  describe 'add a post' do
+    it 'should add a new post' do
+      new_post = { title: "Foo" }
+      sample.add_post(body: new_post.to_json)
+      expect(sample.response.code).to eql 201
     end
   end
 end
